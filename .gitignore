@@ -1,0 +1,17 @@
+API/TravelAppApi/.vs/
+
+# Build results
+API/TravelAppApi/[Dd]ebug/
+API/TravelAppApi/[Dd]ebugPublic/
+API/TravelAppApi/[Rr]elease/
+API/TravelAppApi/[Rr]eleases/
+API/TravelAppApi/x64/
+API/TravelAppApi/x86/
+API/TravelAppApi/build/
+API/TravelAppApi/bld/
+API/TravelAppApi/[Bb]in/
+API/TravelAppApi/[Oo]bj/
+API/TravelAppApi/[Oo]ut/
+API/TravelAppApi/msbuild.log
+API/TravelAppApi/msbuild.err
+API/TravelAppApi/msbuild.wrn
