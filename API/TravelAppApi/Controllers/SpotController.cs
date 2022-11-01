@@ -15,19 +15,24 @@ namespace TravelAppApi.Controllers
             new Spot("SpotName2", "Category2", "District2") { Id = 2 },
             new Spot("SpotName3", "Category2", "District3") { Id = 3 },
             new Spot("SpotName4", "Category3", "District4") { Id = 4 },
-            new Spot("SpotName5", "Category4", "District5") { Id = 5 }
+            new Spot("SpotName5", "Category4", "District5") { Id = 5 },
+            new Spot("SpotName6", "Category5", "District5") { Id = 6 },
+            new Spot("SpotName7", "Category6", "District5") { Id = 7 },
+            new Spot("SpotName8", "Category2", "District1") { Id = 8 },
+            new Spot("SpotName9", "Category3", "District3") { Id = 9 },
+            new Spot("SpotName10", "Category4", "District3") { Id = 10 }
         };
 
         // GET: api/<SpotController>
         [HttpGet]
-        public ActionResult<IEnumerable<Spot>> Get()
+        public ActionResult<IEnumerable<Spot>> GetAllSpots()
         {
             return Ok(spots);
         }
 
         // GET api/<SpotController>/5
-        [HttpGet("{id}")]
-        public ActionResult<Spot> Get(int id)
+        [HttpGet("id/{id}")]
+        public ActionResult<Spot> GetSpotbyId(int id)
         {
             Spot spot = spots.SingleOrDefault(sp => sp.Id == id);
 
@@ -39,10 +44,39 @@ namespace TravelAppApi.Controllers
             return Ok(spot);
         }
 
+        [HttpGet("category/{category}")]
+        public ActionResult<IEnumerable<Spot>> GetSpotbyCategory(string category)
+        {
+            category = category.ToLower();
+            List<Spot> categorySpots = spots.Where(sp => sp.Category.ToLower() == category).ToList();
+
+            if(categorySpots.Count == 0 || categorySpots == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(categorySpots);
+        }
+
+        [HttpGet("district/{district}")]
+        public ActionResult<IEnumerable<Spot>> GetSpotbyDistrict(string district)
+        {
+            district = district.ToLower();
+            List<Spot> districtSpots = spots.Where(sp => sp.District.ToLower() == district).ToList();
+
+            if (districtSpots.Count == 0 || districtSpots == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(districtSpots);
+        }
+
         // POST api/<SpotController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
+
         }
 
         // PUT api/<SpotController>/5
