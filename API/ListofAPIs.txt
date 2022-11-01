@@ -1,0 +1,11 @@
+Get all spots
+https://localhost:7233/api/spot
+
+Get spot by id
+https://localhost:7233/api/spot/id/{id}
+
+Get spot(s) by category
+https://localhost:7233/api/spot/category/{category}
+
+Get spot(s) by district
+https://localhost:7233/api/spot/district/{district}
