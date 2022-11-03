@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 20,
           ),
           Container(
             child: Align(
@@ -66,6 +66,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 controller: _tabController,
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.grey,
+                labelStyle: TextStyle(
+                  fontSize: 15,
+                ),
                 isScrollable: true,
                 indicator: CircleTabIndicator(color: Colors.black, radius: 4),
                 tabs: [
@@ -76,18 +79,87 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   Tab(
                     text: "Heritage",
-                  )
+                  ),
                 ],
               ),
             ),
           ),
+          SizedBox(height: 10),
           Container(
             height: 300,
             width: double.maxFinite,
             child: TabBarView(controller: _tabController, children: [
-              Text("A"),
-              Text("B"),
-              Text("C"),
+              ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    width: 200,
+                    height: 300,
+                    margin: const EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assests/images/saint_martin_1.jpg"),
+                            fit: BoxFit.cover)),
+                  );
+                },
+              ),
+              ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    width: 200,
+                    height: 300,
+                    margin: const EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage("assests/images/sajek_1.jpg"),
+                            fit: BoxFit.cover)),
+                  );
+                },
+              ),
+              ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    width: 200,
+                    height: 300,
+                    margin: const EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assests/images/sundarbans_1.jpg"),
+                            fit: BoxFit.cover)),
+                  );
+                },
+              ),
+              ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    width: 200,
+                    height: 300,
+                    margin: const EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assests/images/lalbagh_fort_1.jpg"),
+                            fit: BoxFit.cover)),
+                  );
+                },
+              ),
             ]),
           ),
         ],
@@ -117,7 +189,7 @@ class _CirclePainter extends BoxPainter {
     _paint.isAntiAlias = true;
     final Offset circleOffset = Offset(
         configuration.size!.width / 2 - radius / 2,
-        configuration.size!.height - radius / 2);
+        configuration.size!.height - radius / 2 - 2);
     canvas.drawCircle(offset + circleOffset, radius, _paint);
   }
 }
