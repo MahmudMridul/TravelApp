@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelAppApi.Models;
+using TravelAppApi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,74 +10,83 @@ namespace TravelAppApi.Controllers
     [ApiController]
     public class SpotController : ControllerBase
     {
-        private List<Spot> spots = new List<Spot>
-        { 
-            new Spot("SpotName1", "Category1", "District1") { Id = 1 }, 
-            new Spot("SpotName2", "Category2", "District2") { Id = 2 },
-            new Spot("SpotName3", "Category2", "District3") { Id = 3 },
-            new Spot("SpotName4", "Category3", "District4") { Id = 4 },
-            new Spot("SpotName5", "Category4", "District5") { Id = 5 },
-            new Spot("SpotName6", "Category5", "District5") { Id = 6 },
-            new Spot("SpotName7", "Category6", "District5") { Id = 7 },
-            new Spot("SpotName8", "Category2", "District1") { Id = 8 },
-            new Spot("SpotName9", "Category3", "District3") { Id = 9 },
-            new Spot("SpotName10", "Category4", "District3") { Id = 10 }
-        };
+        private readonly SpotService _spotService;
+
+        public SpotController(SpotService spotService)
+        {
+            _spotService = spotService;
+        }
 
         // GET: api/<SpotController>
         [HttpGet]
-        public ActionResult<IEnumerable<Spot>> GetAllSpots()
+        public async Task<ActionResult<IEnumerable<Spot>>> GetAllSpots()
         {
+            List<Spot> spots = await _spotService.GetAllSpots();
+
+            if(spots.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(spots);
         }
 
         // GET api/<SpotController>/5
         [HttpGet("id/{id}")]
-        public ActionResult<Spot> GetSpotbyId(int id)
+        public async Task<ActionResult<Spot?>> GetSpotbyId(string id)
         {
-            Spot spot = spots.SingleOrDefault(sp => sp.Id == id);
+            Spot spot = await _spotService.GetSpotById(id);
 
             if(spot == null)
             {
                 return NotFound();
             }
+            return Ok(spot);
+        }
 
+        // GET api/<SpotController>/5
+        [HttpGet("name/{name}")]
+        public async Task<ActionResult<Spot?>> GetSpotbyName(string name)
+        {
+            Spot spot = await _spotService.GetSpotByName(name);
+
+            if (spot == null)
+            {
+                return NotFound();
+            }
             return Ok(spot);
         }
 
         [HttpGet("category/{category}")]
-        public ActionResult<IEnumerable<Spot>> GetSpotbyCategory(string category)
+        public async Task<ActionResult<IEnumerable<Spot>>> GetSpotbyCategory(string category)
         {
             category = category.ToLower();
-            List<Spot> categorySpots = spots.Where(sp => sp.Category.ToLower() == category).ToList();
-
-            if(categorySpots.Count == 0 || categorySpots == null)
+            List<Spot> spots = await _spotService.GetSpotByCategory(category);
+            
+            if(spots.Count == 0)
             {
                 return NotFound();
             }
-
-            return Ok(categorySpots);
+            return Ok(spots);
         }
 
         [HttpGet("district/{district}")]
-        public ActionResult<IEnumerable<Spot>> GetSpotbyDistrict(string district)
+        public async Task<ActionResult<IEnumerable<Spot>>> GetSpotbyDistrict(string district)
         {
             district = district.ToLower();
-            List<Spot> districtSpots = spots.Where(sp => sp.District.ToLower() == district).ToList();
+            List<Spot> spots = await _spotService.GetSpotByDistrict(district);
 
-            if (districtSpots.Count == 0 || districtSpots == null)
+            if (spots.Count == 0)
             {
                 return NotFound();
             }
-
-            return Ok(districtSpots);
+            return Ok(spots);
         }
 
         // POST api/<SpotController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post(Spot newSpot)
         {
-
+            await _spotService.AddSpot(newSpot);
         }
 
         // PUT api/<SpotController>/5

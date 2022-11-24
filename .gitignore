@@ -10,7 +10,7 @@ API/TravelAppApi/x86/*
 API/TravelAppApi/build/*
 API/TravelAppApi/bld/*
 API/TravelAppApi/bin/*
-API/TravelAppApi/obj/*
+API/TravelAppApi/obj/**
 API/TravelAppApi/[Oo]ut/*
 API/TravelAppApi/msbuild.log
 API/TravelAppApi/msbuild.err

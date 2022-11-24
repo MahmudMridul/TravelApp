@@ -1,3 +1,6 @@
+using TravelAppApi.Models;
+using TravelAppApi.Services;
+
 namespace TravelAppApi
 {
     public class Program
@@ -7,6 +10,11 @@ namespace TravelAppApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.Configure<SpotDatabaseSettings>(
+                builder.Configuration.GetSection("TravelAppDatabaseOnline")
+                );
+
+            builder.Services.AddSingleton<SpotService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,7 +33,6 @@ namespace TravelAppApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
